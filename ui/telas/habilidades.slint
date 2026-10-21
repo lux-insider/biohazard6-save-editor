@@ -1,0 +1,165 @@
+// Aba Habilidades: as 96 habilidades do jogo, separadas por modo, cada uma
+// com o pentágono do menu de habilidades (aceso quando comprada).
+import { ScrollView } from "std-widgets.slint";
+import { Tema } from "../tema.slint";
+import { Ponte, HabilidadeInfo } from "../ponte.slint";
+import { Botao, Painel, TextoJogo } from "../componentes/basicos.slint";
+
+// O pentágono dos conjuntos de habilidade do jogo.
+component Pentagono inherits Rectangle {
+    in property <bool> aceso;
+    in property <bool> destaque;
+    Path {
+        width: parent.width;
+        height: parent.height;
+        viewbox-width: 100;
+        viewbox-height: 100;
+        commands: "M 50 4 L 96 38 L 78 94 L 22 94 L 4 38 Z";
+        fill: root.aceso ? @linear-gradient(180deg, #5fa0ff 0%, #1f6bff 60%, #0b2f7a 100%) : #ffffff0c;
+        stroke: root.aceso ? #bcd6ff : (root.destaque ? #ffffff90 : #ffffff40);
+        stroke-width: 2px;
+    }
+    Path {
+        width: parent.width;
+        height: parent.height;
+        viewbox-width: 100;
+        viewbox-height: 100;
+        commands: "M 50 22 L 78 43 L 67 78 L 33 78 L 22 43 Z";
+        fill: transparent;
+        stroke: root.aceso ? #ffffffb0 : #ffffff20;
+        stroke-width: 1px;
+    }
+}
+
+component CartaoHabilidade inherits Rectangle {
+    in property <HabilidadeInfo> info;
+    callback clicado();
+
+    background: root.info.comprada ? #1f6bff26 : (toque.has-hover ? #ffffff0c : #00000060);
+    border-width: 1px;
+    border-color: root.info.infinita ? (root.info.comprada ? #f0c060c0 : #f0c06060) : (root.info.comprada ? #5fa0ff80 : Tema.linha);
+    animate background { duration: 120ms; }
+
+    Pentagono {
+        x: 12px;
+        y: (parent.height - self.height) / 2;
+        width: 40px;
+        height: 40px;
+        aceso: root.info.comprada;
+        destaque: toque.has-hover;
+    }
+    VerticalLayout {
+        x: 64px;
+        width: parent.width - 64px - 104px;
+        alignment: center;
+        spacing: 2px;
+        TextoJogo { texto: root.info.nome; tamanho: 17px; brilho: root.info.comprada; overflow: elide; }
+        Text {
+            text: root.info.descricao;
+            font-size: 12px;
+            color: Tema.texto-2;
+            wrap: word-wrap;
+            overflow: elide;
+            max-height: 32px;
+        }
+    }
+    Text {
+        x: parent.width - self.width - 14px;
+        y: (parent.height - self.height) / 2;
+        text: root.info.comprada ? "COMPRADA" : "NÃO COMPRADA";
+        font-size: 12px;
+        letter-spacing: 1px;
+        color: root.info.comprada ? #bcd6ff : Tema.desativado;
+    }
+    if root.info.alterada: Rectangle {
+        x: parent.width - 12px;
+        y: 6px;
+        width: 7px;
+        height: 7px;
+        border-radius: 3.5px;
+        background: Tema.laranja;
+    }
+    toque := TouchArea { mouse-cursor: pointer; clicked => { root.clicado(); } }
+}
+
+export component TelaHabilidades inherits Rectangle {
+    VerticalLayout {
+        padding-top: 10px;
+        spacing: 12px;
+
+        // Modo, contagem e ações
+        HorizontalLayout {
+            spacing: 10px;
+            for m[i] in Ponte.habilidade-modos: Rectangle {
+                width: rotulo.width + 32px;
+                height: 36px;
+                background: Ponte.habilidade-modo == i ? Tema.azul : (toque.has-hover ? Tema.selecao : #00000070);
+                border-width: 1px;
+                border-color: Ponte.habilidade-modo == i ? Tema.azul-claro : Tema.linha;
+                rotulo := TextoJogo {
+                    width: self.preferred-width;
+                    height: self.preferred-height;
+                    x: (parent.width - self.width) / 2;
+                    y: (parent.height - self.height) / 2;
+                    texto: m;
+                    tamanho: 15px;
+                    espaco: 1.5px;
+                    brilho: Ponte.habilidade-modo == i;
+                    cor: Ponte.habilidade-modo == i ? #ffffff : Tema.texto-2;
+                }
+                toque := TouchArea { mouse-cursor: pointer; clicked => { Ponte.habilidade-escolher-modo(i); } }
+            }
+            Text {
+                text: Ponte.habilidade-contagem;
+                color: Tema.texto-2;
+                vertical-alignment: center;
+                horizontal-stretch: 1;
+                horizontal-alignment: right;
+            }
+            if Ponte.habilidade-modo == 0: Botao {
+                texto: "MUNIÇÃO INFINITA";
+                cheio: !Ponte.infinitas-todas;
+                ativo: !Ponte.infinitas-todas;
+                clicado => { Ponte.habilidade-municao-infinita(); }
+            }
+            Botao { texto: "COMPRAR TODAS"; clicado => { Ponte.habilidade-comprar-todas(); } }
+        }
+
+        // Lista em duas colunas
+        Painel {
+            vertical-stretch: 1;
+            lista := ScrollView {
+                width: parent.width;
+                height: parent.height;
+                content-width: self.visible-width;
+                content-height: ceil(Ponte.habilidades.length / 2) * self.passo + 24px;
+                property <length> passo: 76px;
+                property <length> largura: (self.visible-width - 36px) / 2;
+                // trocar de modo volta a lista para o começo
+                property <int> modo: Ponte.habilidade-modo;
+                changed modo => { self.content-y = 0; }
+                Rectangle {
+                    x: 0;
+                    y: 0;
+                    width: lista.visible-width;
+                    height: ceil(Ponte.habilidades.length / 2) * lista.passo + 24px;
+                    for h[i] in Ponte.habilidades: CartaoHabilidade {
+                        x: 14px + mod(i, 2) * (lista.largura + 8px);
+                        y: 12px + floor(i / 2) * lista.passo;
+                        width: lista.largura;
+                        height: lista.passo - 8px;
+                        info: h;
+                        clicado => { Ponte.habilidade-alternar(h.indice); }
+                    }
+                }
+            }
+        }
+
+        Text {
+            text: "Uma habilidade comprada aparece no menu de habilidades do jogo. Para a munição infinita funcionar, equipe a habilidade da arma num conjunto e, antes de começar a campanha, ative \"Permitir munição infinita\".";
+            wrap: word-wrap;
+            font-size: Tema.fonte-pequena;
+            color: Tema.texto-2;
+        }
+    }
+}

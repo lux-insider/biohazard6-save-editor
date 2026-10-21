@@ -1,0 +1,109 @@
+// Tela inicial: o elenco inteiro do jogo na base, com o logo e o botão de
+// abrir centralizados acima.
+import { Tema } from "../tema.slint";
+import { Ponte } from "../ponte.slint";
+import { Botao, TextoJogo } from "../componentes/basicos.slint";
+
+export component TelaInicio inherits Rectangle {
+    // mesma cor do fundo da arte do elenco, para não aparecer emenda
+    background: #05060b;
+
+    // Fundo azul da tela de título do jogo (title01), que escurece até a cor
+    // do fundo do elenco antes dos personagens, para não ficar por cima deles.
+    Image {
+        width: parent.width;
+        height: parent.height;
+        source: @image-url("../imagens/fundo_titulo.png");
+        image-fit: cover;
+    }
+    Rectangle {
+        y: 0;
+        height: elenco.y + elenco.height * 0.12;
+        background: @linear-gradient(180deg, #05060b30 0%, #05060b00 30%, #05060b90 70%, #05060bff 100%);
+    }
+    Rectangle {
+        y: elenco.y + elenco.height * 0.12 - 1px;
+        height: parent.height - self.y;
+        background: #05060b;
+    }
+
+    // O elenco inteiro (os oito personagens) apoiado na base da tela, sem
+    // cortar ninguém.
+    elenco := Image {
+        width: parent.width;
+        height: min(parent.width * 560 / 1995, parent.height * 0.5);
+        y: parent.height - self.height;
+        source: @image-url("../imagens/elenco.png");
+        image-fit: contain;
+    }
+
+    // Logo, texto e botão centralizados acima do elenco.
+    VerticalLayout {
+        x: 0;
+        y: 0;
+        width: parent.width;
+        height: elenco.y;
+        alignment: center;
+        spacing: 16px;
+
+        HorizontalLayout {
+            spacing: 18px;
+            alignment: center;
+            Image {
+                height: min(elenco.y * 0.42, 180px);
+                width: self.height * 232 / 411;
+                source: @image-url("../imagens/seis.png");
+                image-fit: contain;
+            }
+            VerticalLayout {
+                alignment: center;
+                spacing: 8px;
+                Image {
+                    width: 300px;
+                    height: self.width * 74 / 594;
+                    source: @image-url("../imagens/biohazard.png");
+                    image-fit: contain;
+                }
+                TextoJogo {
+                    texto: "SAVE EDITOR";
+                    tamanho: 22px;
+                    espaco: 9px;
+                    cor: #c9d6f0;
+                }
+                Rectangle { height: 2px; width: 64px; background: Tema.azul; }
+            }
+        }
+
+        HorizontalLayout {
+            alignment: center;
+            Text {
+                width: 620px;
+                text: "Inventário dos oito personagens, habilidades, munição infinita e os arquivos da história. Para o save do Xbox 360 e do PC (Steam).";
+                wrap: word-wrap;
+                horizontal-alignment: center;
+                color: #c9d6f0d0;
+                font-size: 17px;
+            }
+        }
+
+        HorizontalLayout {
+            alignment: center;
+            Botao { texto: "ABRIR SAVE"; cheio: true; clicado => { Ponte.abrir(); } }
+        }
+        Text {
+            text: "Xbox 360: Content\\<perfil>\\43430819\\00000001\\savedata.bin\nPC: Steam\\userdata\\<conta>\\221040\\remote\\savedata.bin";
+            horizontal-alignment: center;
+            font-size: 12px;
+            font-family: Tema.fonte-dados;
+            color: #ffffff70;
+        }
+    }
+
+    Text {
+        x: parent.width - self.width - 24px;
+        y: parent.height - self.height - 16px;
+        text: "por lux-insider";
+        font-size: 12px;
+        color: #ffffff60;
+    }
+}

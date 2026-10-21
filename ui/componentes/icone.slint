@@ -1,0 +1,56 @@
+// Ícones originais do jogo (atlas ui/imagens/itens.png, 10x10 células de
+// 102 px) e a célula octogonal do HUD do BIOHAZARD 6.
+import { Tema } from "../tema.slint";
+
+export component IconeItem inherits Rectangle {
+    in property <int> indice: -1;
+    in property <bool> apagado: false;
+    if root.indice >= 0: Image {
+        width: parent.width;
+        height: parent.height;
+        source: @image-url("../imagens/itens.png");
+        source-clip-x: mod(root.indice, 10) * 102;
+        source-clip-y: floor(root.indice / 10) * 102;
+        source-clip-width: 102;
+        source-clip-height: 102;
+        image-fit: contain;
+        opacity: root.apagado ? 0.35 : 1;
+    }
+}
+
+// Octógono do HUD (seleção de armas): cinza translúcido com borda clara;
+// escolhido fica azul.
+export component Celula inherits Rectangle {
+    in property <int> indice: -1;
+    in property <bool> escolhido: false;
+    in property <bool> destaque: false;
+    in property <bool> apagado: false;
+    in property <bool> fechado: false;
+
+    Path {
+        width: parent.width;
+        height: parent.height;
+        viewbox-width: 100;
+        viewbox-height: 100;
+        commands: "M 29 2 L 71 2 L 98 29 L 98 71 L 71 98 L 29 98 L 2 71 L 2 29 Z";
+        fill: root.escolhido ? #1f6bffd0 : (root.fechado ? #00000080 : (root.destaque ? #ffffff38 : #ffffff1c));
+        stroke: root.escolhido ? #8fc0ff : (root.destaque ? #ffffffd0 : #ffffff70);
+        stroke-width: root.escolhido ? 2.5px : 1.5px;
+    }
+    IconeItem {
+        x: parent.width * 0.1;
+        y: parent.height * 0.1;
+        width: parent.width * 0.8;
+        height: parent.height * 0.8;
+        indice: root.indice;
+        apagado: root.apagado;
+    }
+    if root.fechado: Text {
+        text: "✕";
+        color: #ffffff40;
+        font-size: parent.height * 0.3;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+    @children
+}

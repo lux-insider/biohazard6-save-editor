@@ -1,0 +1,146 @@
+// Ponte entre a interface e o programa (src/interface.rs): tudo que a tela
+// mostra e os callbacks das ações.
+
+export struct PersonagemInfo {
+    nome: string,
+    vida: int,
+    vida-max: int,
+    armas: int,
+}
+
+export struct SlotInfo {
+    grupo: string,
+    icone: int,
+    nome: string,
+    qtd: string,
+    vazio: bool,
+    fechado: bool,
+    nao-obtida: bool,
+    alterado: bool,
+}
+
+export struct ItemOpcao {
+    nome: string,
+    icone: int,
+}
+
+export struct HabilidadeInfo {
+    indice: int,
+    nome: string,
+    descricao: string,
+    comprada: bool,
+    alterada: bool,
+    infinita: bool,
+}
+
+// Uma linha da lista de arquivos: o cabeçalho de uma campanha ou um arquivo.
+export struct ArquivoLinha {
+    titulo: string,
+    cabecalho: bool,
+    campanha: int,
+}
+
+export global Ponte {
+    in-out property <string> titulo: "BIOHAZARD 6 SAVE EDITOR";
+    in-out property <bool> aberto;
+    in-out property <bool> sujo;
+    in-out property <int> aba;
+
+    // aba Save
+    // save de PC (Steam): sem pacote, IDs nem assinatura
+    in-out property <bool> pc;
+    in-out property <string> caminho;
+    in-out property <string> nome-save;
+    in-out property <string> jogo;
+    in-out property <string> data;
+    in-out property <string> profile-id;
+    in-out property <string> device-id;
+    in-out property <string> console-id;
+    in-out property <bool> verificacao-ok;
+    in-out property <bool> hashes-ok;
+    in-out property <bool> assinatura-ok;
+    in-out property <image> miniatura;
+    in-out property <bool> tem-miniatura;
+    in-out property <string> chave;
+    in-out property <string> pontos;
+    in-out property <bool> pontos-invalido;
+    // o valor em vigor, com separador de milhar (ex.: 9.999.999)
+    in-out property <string> pontos-exibido;
+
+    // aba Inventário
+    out property <[image]> retratos: [
+        @image-url("imagens/retratos/leon.png"), @image-url("imagens/retratos/helena.png"),
+        @image-url("imagens/retratos/chris.png"), @image-url("imagens/retratos/piers.png"),
+        @image-url("imagens/retratos/jake.png"), @image-url("imagens/retratos/sherry.png"),
+        @image-url("imagens/retratos/ada.png"), @image-url("imagens/retratos/agente.png"),
+    ];
+    in-out property <[PersonagemInfo]> personagens;
+    in-out property <int> personagem;
+    in-out property <[SlotInfo]> slots;
+    in-out property <int> slot: -1;
+    in-out property <string> vida;
+    in-out property <bool> vida-invalida;
+
+    // editor do espaço escolhido
+    in-out property <string> editor-titulo;
+    in-out property <string> editor-dica;
+    in-out property <bool> editor-item-livre;
+    in-out property <bool> editor-arma;
+    in-out property <bool> editor-obtida;
+    in-out property <bool> editor-tem-qtd;
+    in-out property <[string]> classes;
+    in-out property <int> editor-classe;
+    in-out property <[ItemOpcao]> opcoes;
+    in-out property <int> editor-item: -1;
+    in-out property <string> editor-qtd;
+    in-out property <string> editor-qtd-aviso;
+    in-out property <bool> editor-qtd-invalida;
+
+    // aba Habilidades
+    in-out property <int> habilidade-modo;
+    in-out property <[string]> habilidade-modos;
+    in-out property <[HabilidadeInfo]> habilidades;
+    in-out property <string> habilidade-contagem;
+    in-out property <bool> infinitas-todas;
+
+    // aba Arquivos (os textos da história)
+    in-out property <[ArquivoLinha]> arquivos;
+    in-out property <int> arquivo-sel: -1;
+    in-out property <string> arquivo-titulo;
+    in-out property <string> arquivo-subtitulo;
+    in-out property <int> arquivo-campanha: -1;
+    in-out property <[string]> arquivo-paragrafos;
+
+    // avisos e diálogos
+    in-out property <string> aviso;
+    in-out property <int> aviso-tipo;
+    in-out property <bool> aviso-visivel;
+    in-out property <bool> confirma-visivel;
+    in-out property <string> confirma-titulo;
+    in-out property <string> confirma-texto;
+    in-out property <string> confirma-sim;
+    in-out property <bool> sobre-visivel;
+
+    callback abrir();
+    callback recarregar();
+    callback salvar();
+    callback salvar-como();
+    callback desfazer();
+    callback sair();
+    callback escolher-personagem(int);
+    callback escolher-slot(int);
+    callback vida-editada(string);
+    callback pontos-editados(string);
+    callback trocar-classe(int);
+    callback trocar-item(int);
+    callback qtd-editada(string);
+    callback marcar-obtida(bool);
+    callback esvaziar();
+    callback arquivo-escolher(int);
+    callback habilidade-alternar(int);
+    callback habilidade-escolher-modo(int);
+    callback habilidade-comprar-todas();
+    callback habilidade-municao-infinita();
+    callback fechar-aviso();
+    callback confirma-resposta(bool);
+}

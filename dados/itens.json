@@ -1,0 +1,308 @@
+[
+ {
+  "tipo": 1,
+  "numero": 0,
+  "nome": "Corpo a corpo",
+  "icone": 25
+ },
+ {
+  "tipo": 1,
+  "numero": 1,
+  "nome": "Nine-oh-Nine (909)",
+  "icone": 12
+ },
+ {
+  "tipo": 1,
+  "numero": 2,
+  "nome": "Picador",
+  "icone": 34
+ },
+ {
+  "tipo": 1,
+  "numero": 3,
+  "nome": "Wingshooter",
+  "icone": 46
+ },
+ {
+  "tipo": 1,
+  "numero": 4,
+  "nome": "Espingarda",
+  "icone": 41
+ },
+ {
+  "tipo": 1,
+  "numero": 5,
+  "nome": "Espingarda tática",
+  "icone": 42
+ },
+ {
+  "tipo": 1,
+  "numero": 6,
+  "nome": "Hidra",
+  "icone": 43
+ },
+ {
+  "tipo": 1,
+  "numero": 7,
+  "nome": "Lightning Hawk",
+  "icone": 40
+ },
+ {
+  "tipo": 1,
+  "numero": 8,
+  "nome": "Mata elefante",
+  "icone": 22
+ },
+ {
+  "tipo": 1,
+  "numero": 9,
+  "nome": "Fuzil de precisão",
+  "icone": 37
+ },
+ {
+  "tipo": 1,
+  "numero": 10,
+  "nome": "Fuzil de precisão semi-auto",
+  "icone": 36
+ },
+ {
+  "tipo": 1,
+  "numero": 11,
+  "nome": "Fuzil antimaterial",
+  "icone": 44
+ },
+ {
+  "tipo": 1,
+  "numero": 12,
+  "nome": "Caixa de munição com 50",
+  "icone": 33
+ },
+ {
+  "tipo": 1,
+  "numero": 13,
+  "nome": "Tiro Triplo",
+  "icone": 13
+ },
+ {
+  "tipo": 1,
+  "numero": 14,
+  "nome": "Submetralhadora",
+  "icone": 35
+ },
+ {
+  "tipo": 1,
+  "numero": 15,
+  "nome": "Fuzil tático para operações especiais",
+  "icone": 32
+ },
+ {
+  "tipo": 1,
+  "numero": 16,
+  "nome": "Bear Commander",
+  "icone": 45
+ },
+ {
+  "tipo": 1,
+  "numero": 17,
+  "nome": "Fuzil tático RN",
+  "icone": 14
+ },
+ {
+  "tipo": 1,
+  "numero": 18,
+  "nome": "Lança-granadas",
+  "icone": 23
+ },
+ {
+  "tipo": 1,
+  "numero": 19,
+  "nome": "Granada",
+  "icone": 27
+ },
+ {
+  "tipo": 1,
+  "numero": 20,
+  "nome": "Granada incendiária",
+  "icone": 29
+ },
+ {
+  "tipo": 1,
+  "numero": 21,
+  "nome": "Granada de luz",
+  "icone": 28
+ },
+ {
+  "tipo": 1,
+  "numero": 22,
+  "nome": "Bomba remota",
+  "icone": 47
+ },
+ {
+  "tipo": 1,
+  "numero": 23,
+  "nome": "Balestra",
+  "icone": 26
+ },
+ {
+  "tipo": 1,
+  "numero": 24,
+  "nome": "Faca de sobrevivência",
+  "icone": 38
+ },
+ {
+  "tipo": 1,
+  "numero": 25,
+  "nome": "Faca de combate",
+  "icone": 39
+ },
+ {
+  "tipo": 1,
+  "numero": 26,
+  "nome": "Bastão elétrico",
+  "icone": 24
+ },
+ {
+  "tipo": 1,
+  "numero": 27,
+  "nome": "Lança-foguetes",
+  "icone": 15
+ },
+ {
+  "tipo": 1,
+  "numero": 29,
+  "nome": "Comprimido de cura",
+  "icone": 88
+ },
+ {
+  "tipo": 1,
+  "numero": 32,
+  "nome": "Spray de primeiros socorros",
+  "icone": 71
+ },
+ {
+  "tipo": 2,
+  "numero": 1,
+  "nome": "Munição (9 mm)",
+  "icone": 0
+ },
+ {
+  "tipo": 2,
+  "numero": 2,
+  "nome": "Cartucho calibre 12",
+  "icone": 1
+ },
+ {
+  "tipo": 2,
+  "numero": 3,
+  "nome": "Munição (7,62 mm)",
+  "icone": 3
+ },
+ {
+  "tipo": 2,
+  "numero": 4,
+  "nome": "Munição (5,56 mm)",
+  "icone": 2
+ },
+ {
+  "tipo": 2,
+  "numero": 5,
+  "nome": "Munição (12,7 mm)",
+  "icone": 4
+ },
+ {
+  "tipo": 2,
+  "numero": 6,
+  "nome": "Munição Magnum .50",
+  "icone": 5
+ },
+ {
+  "tipo": 2,
+  "numero": 7,
+  "nome": "Munição .500 S&W (S&W) Magnum",
+  "icone": 6
+ },
+ {
+  "tipo": 2,
+  "numero": 8,
+  "nome": "Projéteis explosivos cal. 40mm",
+  "icone": 7
+ },
+ {
+  "tipo": 2,
+  "numero": 9,
+  "nome": "Projéteis ácidos calibre 40mm",
+  "icone": 8
+ },
+ {
+  "tipo": 2,
+  "numero": 10,
+  "nome": "Projéteis de nitrogênio cal. 40mm",
+  "icone": 9
+ },
+ {
+  "tipo": 2,
+  "numero": 11,
+  "nome": "Foguete explosivo de 73 mm",
+  "icone": 19
+ },
+ {
+  "tipo": 2,
+  "numero": 12,
+  "nome": "Flechas (normais)",
+  "icone": 16
+ },
+ {
+  "tipo": 2,
+  "numero": 13,
+  "nome": "Flechas (explosivas)",
+  "icone": 17
+ },
+ {
+  "tipo": 2,
+  "numero": 14,
+  "nome": "Cartucho calibre 10",
+  "icone": 18
+ },
+ {
+  "tipo": 3,
+  "numero": 1,
+  "nome": "Erva (Verde)",
+  "icone": 10
+ },
+ {
+  "tipo": 3,
+  "numero": 2,
+  "nome": "Erva (Vermelha)",
+  "icone": 11
+ },
+ {
+  "tipo": 3,
+  "numero": 3,
+  "nome": "Erva (Verde) (2)",
+  "icone": 20
+ },
+ {
+  "tipo": 3,
+  "numero": 4,
+  "nome": "Erva (Vermelha) (2)",
+  "icone": 21
+ },
+ {
+  "tipo": 3,
+  "numero": 5,
+  "nome": "Erva (Vd+Vd)",
+  "icone": 30
+ },
+ {
+  "tipo": 3,
+  "numero": 6,
+  "nome": "Erva (Vd+Vm)",
+  "icone": 31
+ },
+ {
+  "tipo": 3,
+  "numero": 7,
+  "nome": "Erva (Vd+Vd+Vd)",
+  "icone": 60
+ }
+]

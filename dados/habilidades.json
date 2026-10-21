@@ -1,0 +1,580 @@
+{
+ "habilidades": [
+  {
+   "nome": "Armas de fogo Nv. 1",
+   "descricao": "Aumenta pouco a potência das armas de fogo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Armas de fogo Nv. 2",
+   "descricao": "Aumenta a potência das armas de fogo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Armas de fogo Nv. 3",
+   "descricao": "Aumenta muito a potência das armas de fogo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Corpo a corpo Nv. 1",
+   "descricao": "Aumenta pouco a potência em ataques corpo a corpo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Corpo a corpo Nv. 2",
+   "descricao": "Aumenta a potência durante ataques corpo a corpo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Corpo a corpo Nv. 3",
+   "descricao": "Aumenta muito a potência em ataques corpo a corpo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Defesa Nv. 1",
+   "descricao": "Reduz pouco o dano recebido.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Defesa Nv. 2",
+   "descricao": "Reduz o dano recebido.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Defesa Nv. 3",
+   "descricao": "Reduz muito o dano recebido.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Golpe crítico Nv. 1",
+   "descricao": "Aumenta pouco as chances de um golpe crítico.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Golpe crítico Nv. 2",
+   "descricao": "Aumenta as chances de um golpe crítico.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Golpe crítico Nv. 3",
+   "descricao": "Aumenta muito as chances de um golpe crítico.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Perfuração Nv. 1",
+   "descricao": "Aumenta pouco a perfuração das armas de fogo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Perfuração Nv. 2",
+   "descricao": "Aumenta a perfuração das armas de fogo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Perfuração Nv. 3",
+   "descricao": "Aumenta muito a perfuração das armas de fogo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Assassino de J'avo Nv. 1",
+   "descricao": "Aumenta a força dos ataques contra um J'avo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Assassino de J'avo Nv. 2",
+   "descricao": "Aumenta muito a força dos ataques contra um J'avo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Caçador de zumbis Nv. 1",
+   "descricao": "Aumenta a força dos ataques contra um zumbi.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Caçador de zumbis Nv. 2",
+   "descricao": "Aumenta muito a força dos ataques contra um zumbi.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Mais granadas",
+   "descricao": "Aumenta a potência das granadas.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Especialista em pistolas",
+   "descricao": "Aumenta a potência das pistolas.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Especialista em espingardas",
+   "descricao": "Aumenta a potência das espingardas.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Especialista em Magnum",
+   "descricao": "Aumenta a potência da Magnum.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Atirador de elite",
+   "descricao": "Aumenta a potência dos fuzis de precisão.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Especialista em pistolas automáticas",
+   "descricao": "Aumenta a potência das pistolas automáticas.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Especialista em fuzis táticos",
+   "descricao": "Aumenta a potência dos fuzis táticos.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Especialista em lança-granadas",
+   "descricao": "Aumenta a potência dos lança-granadas.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Especialista em balestras",
+   "descricao": "Aumenta a potência das balestras.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Pistola infinita",
+   "descricao": "Fornece munição infinita para pistolas.",
+   "modo": 0,
+   "infinita": true
+  },
+  {
+   "nome": "Espingarda infinita",
+   "descricao": "Fornece infinitos cartuchos de espingarda.",
+   "modo": 0,
+   "infinita": true
+  },
+  {
+   "nome": "Magnum infinita",
+   "descricao": "Fornece munição infinita para a Magnum.",
+   "modo": 0,
+   "infinita": true
+  },
+  {
+   "nome": "Fuzil de precisão infinito",
+   "descricao": "Fornece munição infinita para fuzis de precisão.",
+   "modo": 0,
+   "infinita": true
+  },
+  {
+   "nome": "Pistola automática infinita",
+   "descricao": "Fornece munição infinita para pistolas automáticas.",
+   "modo": 0,
+   "infinita": true
+  },
+  {
+   "nome": "Fuzil tático infinito",
+   "descricao": "Fornece munição infinita para fuzis táticos.",
+   "modo": 0,
+   "infinita": true
+  },
+  {
+   "nome": "Lança-granadas infinito",
+   "descricao": "Fornece granadas infinitas para lança-granadas.",
+   "modo": 0,
+   "infinita": true
+  },
+  {
+   "nome": "Balestra infinita",
+   "descricao": "Fornece um número infinito de flechas de balestra.",
+   "modo": 0,
+   "infinita": true
+  },
+  {
+   "nome": "Mais munição de pistolas",
+   "descricao": "Dará mais munição de 9 mm e 5.56 NATO.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Mais cartuchos de espingarda",
+   "descricao": "Dará mais cartuchos de espingarda de calibre 10 e 12.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Mais munição de Magnum",
+   "descricao": "Dará mais munição de Magnum AE .50 e S&W .500.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Mais munição de fuzil",
+   "descricao": "Dará mais munição de 12.7 mm e 7.62 NATO.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Mais granadas",
+   "descricao": "Dará mais cargas de nitrogênio, ácidas e explosivas de 40 mm.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Mais flechas",
+   "descricao": "Dará mais flechas normais e de bomba de tubo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Último tiro",
+   "descricao": "Aumenta muito a potência do seu tiro final.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Movimento dissimulado",
+   "descricao": "Obtenha a habilidade de mover-se em silêncio.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Recarga rápida",
+   "descricao": "Recarregue suas armas rapidamente.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Concentração Nv. 1",
+   "descricao": "Deixa a mão firme ao atirar.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Concentração Nv. 2",
+   "descricao": "Deixa a mão muito firme ao atirar.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Firmeza Nv. 1",
+   "descricao": "Reduz o recuo depois de atirar.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Firmeza Nv. 2",
+   "descricao": "Reduz bastante o recuo depois de atirar.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Evasão",
+   "descricao": "Permite se soltar quando o inimigo agarrá-lo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Itens perdidos",
+   "descricao": "Mais inimigos derrotados deixarão itens cair.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Recuperação Nv. 1",
+   "descricao": "Ajuda a acelerar o tempo de recuperação ao morrer.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Recuperação Nv. 2",
+   "descricao": "Ajuda muito a acelerar a recuperação ao morrer.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Potência de combate Nv. 1",
+   "descricao": "Aumenta sua barra de combate em 3 blocos.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Potência de combate Nv. 2",
+   "descricao": "Aumenta sua barra de combate em 5 blocos.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Olho de águia",
+   "descricao": "Aumenta o zoom da mira do fuzil de precisão.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Espírito de equipe",
+   "descricao": "Fortalece os ataques de seu parceiro quando vocês estão próximos.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Médico de campo Nv. 1",
+   "descricao": "Seu parceiro pode lhe dar alguns comprimidos de cura no resgate.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Médico de campo Nv. 2",
+   "descricao": "Seu parceiro pode lhe dar alguns comprimidos de cura no resgate.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Lobo solitário",
+   "descricao": "Seu parceiro não lhe ajudará se estiver em apuros.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Instinto selvagem",
+   "descricao": "Remove sua mira, mas aumenta seu poder de fogo.",
+   "modo": 0,
+   "infinita": false
+  },
+  {
+   "nome": "Botar para quebrar!",
+   "descricao": "Execução mais combos se o tempo estiver acabando.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Bônus de tempo +",
+   "descricao": "Aumenta o tempo dado por um bônus de tempo.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Bônus de combo +",
+   "descricao": "Aumenta o tempo para um bônus de combo.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Além do limite",
+   "descricao": "Aumenta os pontos ganhos por ultrapassar 50 combos.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Bombardeio",
+   "descricao": "Aumenta sua potência de ataque se você atacar imediatamente após outro jogador.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Rápido e mortal",
+   "descricao": "Aumenta a potência de tiros rápidos.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Contador de potência",
+   "descricao": "Aumenta muito a potência dos contra-ataques.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Segunda chance",
+   "descricao": "Aumenta a potência das armas de fogo e dos ataques corpo a corpo quando a barra de vida está baixa.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Mestre de artes marciais",
+   "descricao": "Aumenta a força de ataques físicos, mas a potência de ataques de armas de fogo é muito reduzida.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Mestre das armas",
+   "descricao": "Aumenta a força de ataques de armas de fogo, mas a potência de ataques físicos é bastante reduzida.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Último em pé",
+   "descricao": "Aumenta bastante a potência de ataque, mas os ataques em você machucam três vezes mais.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Vingança",
+   "descricao": "Aumenta sua potência de ataque contra a pessoa que o derrotou por último.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Golpe preventivo",
+   "descricao": "Aumenta a potência de ataque se atacar por trás.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Pistoleiro",
+   "descricao": "Aumenta a velocidade de tiro e recarga.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Última chance",
+   "descricao": "Aumenta bastante a potência de ataque ao morrer, mas o tempo de recuperação é igualmente reduzido.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Farmacêutico",
+   "descricao": "Aumenta a potência dos comprimidos de cura.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Médico",
+   "descricao": "Cura um companheiro que está longe quando você usa um comprimido de cura.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Socorrista",
+   "descricao": "Facilita o resgate de companheiros que estão morrendo.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Pega leve",
+   "descricao": "Acelera a recuperação natural ao usar cobertura.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Cura natural",
+   "descricao": "Acelera a recuperação natural.",
+   "modo": 1,
+   "infinita": false
+  },
+  {
+   "nome": "Estímulo de pontos do inimigo",
+   "descricao": "Dá-lhe um grande número de pontos de criatura no no início do jogo.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Mais pontos do inimigo",
+   "descricao": "Você ganha pontos de criatura mais rápido.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Treinamento",
+   "descricao": "Torne-se invencível exceto para mortes súbitas e armas infinitas. Nenhuma pontuação dada.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Ataque criatura Nv. 1",
+   "descricao": "Aumenta pouco o ataque ao jogar como uma criatura. Para uso apenas no modo Caça a Agente.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Ataque criatura Nv. 2",
+   "descricao": "Aumenta o ataque ao jogar como uma criatura. Para uso apenas no modo Caça a Agente.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Ataque criatura Nv. 3",
+   "descricao": "Aumenta o ataque ao jogar como uma criatura. Para uso apenas no modo Caça a Agente.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Defesa criatura Nv. 1",
+   "descricao": "Aumenta ligeiramente a defesa ao jogar como uma criatura. Para uso apenas no modo Caça a Agente.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Defesa criatura Nv. 2",
+   "descricao": "Aumenta a defesa ao jogar como uma criatura. Para uso apenas no modo Caça a Agente.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Defesa criatura Nv. 3",
+   "descricao": "Aumenta a defesa ao jogar como uma criatura. Para uso apenas no modo Caça a Agente.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Vida criatura Nv. 1",
+   "descricao": "Aumenta ligeiramente a cura ao jogar como uma criatura. Para uso apenas no modo Caça a Agente.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Vida criatura Nv. 2",
+   "descricao": "Aumenta a cura ao jogar como uma criatura. Para uso apenas no modo Caça a Agente.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Vida criatura Nv. 3",
+   "descricao": "Aumenta a cura ao jogar como uma criatura. Para uso apenas no modo Caça a Agente.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Vigor criatura Nv. 1",
+   "descricao": "Aumenta ligeiramente o vigor ao jogar como uma criatura. Para uso apenas no modo Caça a Agente.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Vigor criatura Nv. 2",
+   "descricao": "Aumenta o vigor ao jogar como uma criatura. Para uso apenas no modo Caça a Agente.",
+   "modo": 2,
+   "infinita": false
+  },
+  {
+   "nome": "Vigor criatura Nv. 3",
+   "descricao": "Aumenta o vigor ao jogar como uma criatura. Para uso apenas no modo Caça a Agente.",
+   "modo": 2,
+   "infinita": false
+  }
+ ]
+}

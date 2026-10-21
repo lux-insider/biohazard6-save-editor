@@ -1,0 +1,139 @@
+// Aba Arquivos: os 80 textos da história (um por emblema de serpente),
+// separados por campanha, com o leitor ao lado. Só leitura.
+import { ScrollView } from "std-widgets.slint";
+import { Tema } from "../tema.slint";
+import { Ponte, ArquivoLinha } from "../ponte.slint";
+import { Painel, TextoJogo } from "../componentes/basicos.slint";
+
+component LinhaArquivo inherits Rectangle {
+    in property <ArquivoLinha> linha;
+    in property <bool> escolhido;
+    callback clicado();
+
+    height: root.linha.cabecalho ? 54px : 34px;
+    background: root.escolhido ? #1f6bff50 : (toque.has-hover && !root.linha.cabecalho ? Tema.realce : transparent);
+    clip: true;
+
+    // Cabeçalho da campanha: o busto do personagem sumindo no escuro.
+    if root.linha.cabecalho: Image {
+        x: parent.width - self.width;
+        width: parent.height * 288 / 128;
+        height: parent.height;
+        source: @image-url("../imagens/bustos.png");
+        source-clip-x: 0;
+        source-clip-y: root.linha.campanha * 2 * 128;
+        source-clip-width: 288;
+        source-clip-height: 128;
+        image-fit: fill;
+        opacity: 0.85;
+    }
+    if root.linha.cabecalho: Rectangle {
+        background: @linear-gradient(90deg, #02040cf0 0%, #02040cb0 45%, #02040c00 80%);
+    }
+    if root.linha.cabecalho: Rectangle {
+        y: parent.height - 1px;
+        height: 1px;
+        background: Tema.azul;
+    }
+    if root.linha.cabecalho: TextoJogo {
+        x: 10px;
+        y: (parent.height - self.height) / 2;
+        width: self.preferred-width;
+        height: self.preferred-height;
+        texto: root.linha.titulo;
+        tamanho: 16px;
+        espaco: 2px;
+    }
+
+    if root.escolhido: Rectangle { x: 0; width: 3px; background: Tema.azul-claro; }
+    if !root.linha.cabecalho: Text {
+        x: 16px;
+        width: parent.width - 24px;
+        height: parent.height;
+        text: root.linha.titulo;
+        font-size: 15px;
+        color: root.escolhido ? #ffffff : Tema.texto;
+        vertical-alignment: center;
+        overflow: elide;
+    }
+    toque := TouchArea {
+        enabled: !root.linha.cabecalho;
+        mouse-cursor: root.linha.cabecalho ? default : pointer;
+        clicked => { root.clicado(); }
+    }
+}
+
+export component TelaArquivos inherits Rectangle {
+    HorizontalLayout {
+        spacing: 16px;
+        padding-top: 10px;
+
+        // Lista
+        Painel {
+            width: 320px;
+            lista := ScrollView {
+                width: parent.width;
+                height: parent.height;
+                content-width: self.visible-width;
+                VerticalLayout {
+                    width: lista.visible-width;
+                    padding: 6px;
+                    spacing: 1px;
+                    for l[i] in Ponte.arquivos: LinhaArquivo {
+                        linha: l;
+                        escolhido: Ponte.arquivo-sel == i;
+                        clicado => { Ponte.arquivo-escolher(i); }
+                    }
+                }
+            }
+        }
+
+        // Leitor, com o personagem da campanha ao fundo
+        Painel {
+            horizontal-stretch: 1;
+            clip: true;
+            if Ponte.arquivo-campanha >= 0: Image {
+                x: parent.width - self.width + 60px;
+                y: 0;
+                height: parent.height;
+                width: self.height;
+                source: Ponte.retratos[Ponte.arquivo-campanha * 2];
+                image-fit: contain;
+                opacity: 0.28;
+            }
+            Rectangle {
+                background: @linear-gradient(90deg, #070c18e0 0%, #070c18c0 55%, #070c1830 100%);
+            }
+            VerticalLayout {
+                padding: 28px;
+                padding-bottom: 8px;
+                spacing: 6px;
+                // ao trocar de arquivo, a leitura volta para o começo
+                property <int> sel: Ponte.arquivo-sel;
+                changed sel => { pagina.content-y = 0; }
+                TextoJogo { texto: Ponte.arquivo-titulo; tamanho: 32px; espaco: 1px; }
+                Text { text: Ponte.arquivo-subtitulo; font-size: 14px; color: Tema.azul-claro; }
+                Rectangle { height: 12px; Rectangle { x: 0; y: 6px; width: 64px; height: 2px; background: Tema.azul; } }
+                pagina := ScrollView {
+                    vertical-stretch: 1;
+                    content-width: self.visible-width;
+                    // Largura fixa: sem ela o texto quebrado fica mais alto do
+                    // que a rolagem calcula e o fim não aparece.
+                    VerticalLayout {
+                        width: pagina.visible-width;
+                        alignment: start;
+                        padding-right: 16px;
+                        padding-bottom: 24px;
+                        spacing: 16px;
+                        for t in Ponte.arquivo-paragrafos: Text {
+                            text: t;
+                            font-size: 18px;
+                            color: Tema.texto;
+                            wrap: word-wrap;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

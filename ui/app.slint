@@ -1,0 +1,124 @@
+// Janela principal: menus, tela inicial ou editor com abas.
+import "fontes/RE6-Mensagem.ttf";
+import "fontes/NotoSans-Regular.ttf";
+import { Palette } from "std-widgets.slint";
+import { Tema } from "tema.slint";
+import { Ponte } from "ponte.slint";
+import { Botao, BarraAbas, TextoJogo } from "componentes/basicos.slint";
+import { Aviso, Confirmacao, Sobre } from "componentes/dialogos.slint";
+import { TelaInicio } from "telas/inicio.slint";
+import { TelaSave } from "telas/save.slint";
+import { TelaInventario } from "telas/inventario.slint";
+import { TelaHabilidades } from "telas/habilidades.slint";
+import { TelaArquivos } from "telas/arquivos.slint";
+
+export { Ponte }
+
+export component JanelaPrincipal inherits Window {
+    title: Ponte.titulo;
+    icon: @image-url("imagens/icone.png");
+    preferred-width: 1360px;
+    preferred-height: 900px;
+    min-width: 1280px;
+    min-height: 700px;
+    background: Tema.fundo;
+    default-font-size: Tema.fonte;
+    default-font-family: Tema.fonte-texto;
+
+    init => { Palette.color-scheme = ColorScheme.dark; }
+
+    MenuBar {
+        Menu {
+            title: "Arquivo";
+            MenuItem { title: "Abrir save…"; activated => { Ponte.abrir(); } }
+            MenuItem { title: "Recarregar"; enabled: Ponte.aberto; activated => { Ponte.recarregar(); } }
+            MenuSeparator { }
+            MenuItem { title: "Salvar"; enabled: Ponte.aberto && Ponte.sujo; activated => { Ponte.salvar(); } }
+            MenuItem { title: "Salvar como…"; enabled: Ponte.aberto; activated => { Ponte.salvar-como(); } }
+            MenuItem { title: "Desfazer alterações"; enabled: Ponte.sujo; activated => { Ponte.desfazer(); } }
+            MenuSeparator { }
+            MenuItem { title: "Sair"; activated => { Ponte.sair(); } }
+        }
+        Menu {
+            title: "Ajuda";
+            MenuItem { title: "Sobre"; activated => { Ponte.sobre-visivel = true; } }
+        }
+    }
+
+    if !Ponte.aberto: TelaInicio {
+        width: parent.width;
+        height: parent.height;
+    }
+
+    // Editor: o azul-escuro dos menus do jogo, mais claro no alto.
+    if Ponte.aberto: Rectangle {
+        width: parent.width;
+        height: parent.height;
+        background: @radial-gradient(circle, #0d1a33 0%, #060a14 55%, #03050a 100%);
+    }
+
+    if Ponte.aberto: VerticalLayout {
+        padding: 22px;
+        padding-top: 10px;
+        spacing: 8px;
+
+        HorizontalLayout {
+            spacing: 14px;
+            alignment: center;
+            Image {
+                height: 56px;
+                width: 40px;
+                source: @image-url("imagens/seis.png");
+                image-fit: contain;
+            }
+            VerticalLayout {
+                alignment: center;
+                spacing: 2px;
+                Image {
+                    height: 30px;
+                    width: 30px * 594 / 74;
+                    source: @image-url("imagens/biohazard.png");
+                    image-fit: contain;
+                }
+                TextoJogo {
+                    texto: "SAVE EDITOR";
+                    tamanho: 14px;
+                    espaco: 8px;
+                    cor: #c9d6f0;
+                    horizontal-alignment: center;
+                }
+            }
+        }
+
+        abas := BarraAbas {
+            abas: ["SAVE", "INVENTÁRIO", "HABILIDADES", "ARQUIVOS"];
+            atual <=> Ponte.aba;
+        }
+
+        Rectangle {
+            vertical-stretch: 1;
+            if Ponte.aba == 0: TelaSave { width: parent.width; height: parent.height; }
+            if Ponte.aba == 1: TelaInventario { width: parent.width; height: parent.height; }
+            if Ponte.aba == 2: TelaHabilidades { width: parent.width; height: parent.height; }
+            if Ponte.aba == 3: TelaArquivos { width: parent.width; height: parent.height; }
+        }
+
+        Rectangle { height: 1px; background: Tema.linha; }
+        HorizontalLayout {
+            spacing: 14px;
+            padding-top: 4px;
+            Botao { texto: "ABRIR OUTRO"; clicado => { Ponte.abrir(); } }
+            Rectangle { horizontal-stretch: 1; }
+            Botao { texto: "DESFAZER"; ativo: Ponte.sujo; clicado => { Ponte.desfazer(); } }
+            Botao { texto: "SALVAR COMO…"; clicado => { Ponte.salvar-como(); } }
+            Botao { texto: "SALVAR ARQUIVO"; cheio: true; ativo: Ponte.sujo; clicado => { Ponte.salvar(); } }
+        }
+    }
+
+    Aviso {
+        x: 24px;
+        y: parent.height - self.height - 80px;
+    }
+    Confirmacao { width: parent.width; height: parent.height; }
+    Sobre { width: parent.width; height: parent.height; }
+}

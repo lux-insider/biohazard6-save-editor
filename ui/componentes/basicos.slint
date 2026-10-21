@@ -1,0 +1,207 @@
+// Componentes simples reaproveitados em todas as telas.
+import { CampoTexto } from "controles.slint";
+import { Tema } from "../tema.slint";
+
+// Texto com o efeito dos menus do jogo: brilho azul em volta e sombra
+// escura embaixo (cópias deslocadas do texto, que o renderizador por
+// software não tem contorno).
+export component TextoJogo inherits Rectangle {
+    in property <string> texto;
+    in property <length> tamanho: 16px;
+    in property <length> espaco: 0px;
+    in property <color> cor: #ffffff;
+    in property <bool> brilho: true;
+    in property <TextHorizontalAlignment> horizontal-alignment: left;
+    in property <TextOverflow> overflow: clip;
+
+    // Só tamanho preferido: fora de um layout, quem usa fixa a largura e a
+    // altura (largura fixa aqui limitaria a largura máxima da janela).
+    preferred-width: t.preferred-width + 2px;
+    preferred-height: t.preferred-height;
+
+    for d in (root.brilho ? 4 : 0): Text {
+        x: (d == 0 ? -1px : d == 1 ? 1px : 0px);
+        y: (d == 2 ? -1px : d == 3 ? 1px : 0px);
+        width: parent.width;
+        height: parent.height;
+        text: root.texto;
+        font-family: Tema.fonte-titulo;
+        font-size: root.tamanho;
+        letter-spacing: root.espaco;
+        color: Tema.brilho;
+        horizontal-alignment: root.horizontal-alignment;
+        vertical-alignment: center;
+        overflow: root.overflow;
+    }
+    Text {
+        x: 1px;
+        y: 2px;
+        width: parent.width;
+        height: parent.height;
+        text: root.texto;
+        font-family: Tema.fonte-titulo;
+        font-size: root.tamanho;
+        letter-spacing: root.espaco;
+        color: Tema.sombra;
+        horizontal-alignment: root.horizontal-alignment;
+        vertical-alignment: center;
+        overflow: root.overflow;
+    }
+    t := Text {
+        width: parent.width;
+        height: parent.height;
+        text: root.texto;
+        font-family: Tema.fonte-titulo;
+        font-size: root.tamanho;
+        letter-spacing: root.espaco;
+        color: root.cor;
+        horizontal-alignment: root.horizontal-alignment;
+        vertical-alignment: center;
+        overflow: root.overflow;
+    }
+}
+
+// Botão no estilo do HUD: barra escura com borda fina; passa a azul ao
+// passar o mouse; `cheio` é o botão principal.
+export component Botao inherits Rectangle {
+    in property <string> texto;
+    in property <bool> cheio: false;
+    in property <bool> ativo: true;
+    in property <bool> pequeno: false;
+    callback clicado();
+
+    min-width: t.width + (root.pequeno ? 28px : 44px);
+    preferred-width: self.min-width;
+    horizontal-stretch: 0;
+    height: root.pequeno ? 30px : 38px;
+    background: !root.ativo ? #00000060 : (root.cheio ? (toque.has-hover ? Tema.azul-claro : Tema.azul) : (toque.has-hover ? Tema.selecao : #000000a0));
+    border-width: 1px;
+    border-color: !root.ativo ? Tema.linha : (root.cheio ? Tema.azul-claro : (toque.has-hover ? Tema.azul-claro : Tema.borda));
+    animate background { duration: 120ms; }
+    t := TextoJogo {
+        width: self.preferred-width;
+        height: self.preferred-height;
+        x: (parent.width - self.width) / 2;
+        y: (parent.height - self.height) / 2;
+        texto: root.texto;
+        tamanho: root.pequeno ? 14px : 16px;
+        espaco: 1.5px;
+        brilho: false;
+        cor: !root.ativo ? Tema.desativado : #ffffff;
+        horizontal-alignment: center;
+    }
+    toque := TouchArea {
+        enabled: root.ativo;
+        mouse-cursor: root.ativo ? pointer : default;
+        clicked => { root.clicado(); }
+    }
+}
+
+// Rótulo pequeno em cima e a caixa de texto embaixo.
+export component Campo inherits VerticalLayout {
+    alignment: start;
+    in property <string> rotulo;
+    in-out property <string> texto;
+    in property <bool> leitura: false;
+    in property <bool> invalido: false;
+    in property <string> ajuda;
+    in property <bool> ajuda-aviso: false;
+    callback editado(string);
+
+    spacing: 3px;
+    Text {
+        text: root.rotulo;
+        font-size: Tema.fonte-pequena;
+        color: root.invalido ? Tema.vermelho : Tema.texto-2;
+    }
+    CampoTexto {
+        height: 38px;
+        text <=> root.texto;
+        read-only: root.leitura;
+        edited(t) => { root.editado(t); }
+    }
+    if root.ajuda != "": Text {
+        text: root.ajuda;
+        font-size: 11px;
+        wrap: word-wrap;
+        color: root.invalido ? Tema.vermelho : (root.ajuda-aviso ? Tema.laranja : Tema.texto-2);
+    }
+}
+
+// Título de seção: texto em caixa alta com um traço azul na frente.
+export component Titulo inherits HorizontalLayout {
+    in property <string> texto;
+    spacing: 10px;
+    alignment: start;
+    Rectangle { width: 4px; background: Tema.azul; }
+    TextoJogo {
+        texto: root.texto;
+        tamanho: 19px;
+        espaco: 2px;
+    }
+}
+
+// Abas no estilo do menu do jogo: texto em caixa alta, a escolhida com
+// fundo azul.
+export component BarraAbas inherits Rectangle {
+    in property <[string]> abas;
+    in-out property <int> atual: 0;
+
+    height: 42px;
+    background: #00000070;
+    border-width: 1px;
+    border-color: Tema.linha;
+    HorizontalLayout {
+        alignment: center;
+        spacing: 4px;
+        padding: 4px;
+        for aba[i] in root.abas: Rectangle {
+            width: rotulo.width + 48px;
+            background: root.atual == i ? Tema.azul : (toque.has-hover ? Tema.selecao : transparent);
+            animate background { duration: 120ms; }
+            rotulo := TextoJogo {
+                width: self.preferred-width;
+                height: self.preferred-height;
+                x: (parent.width - self.width) / 2;
+                y: (parent.height - self.height) / 2;
+                texto: aba;
+                tamanho: 18px;
+                espaco: 2px;
+                brilho: root.atual == i;
+                cor: root.atual == i ? #ffffff : (toque.has-hover ? Tema.texto : Tema.texto-2);
+                horizontal-alignment: center;
+            }
+            toque := TouchArea {
+                mouse-cursor: pointer;
+                clicked => { root.atual = i; }
+            }
+        }
+    }
+}
+
+// Etiqueta colorida (ok / problema).
+export component Selo inherits Rectangle {
+    in property <string> texto;
+    in property <bool> bom: true;
+    height: 24px;
+    width: s.preferred-width + 18px;
+    border-radius: 2px;
+    border-width: 1px;
+    border-color: root.bom ? #6fcf6a80 : #d8342a90;
+    background: root.bom ? #6fcf6a1f : #d8342a26;
+    s := Text {
+        text: root.texto;
+        font-size: 12px;
+        color: root.bom ? Tema.verde : Tema.vermelho;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+}
+
+// Painel translúcido com borda fina, como as janelas do HUD.
+export component Painel inherits Rectangle {
+    background: Tema.cartao;
+    border-width: 1px;
+    border-color: Tema.linha;
+    @children
+}

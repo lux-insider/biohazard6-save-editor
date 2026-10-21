@@ -1,0 +1,291 @@
+// Aba Inventário: os 8 personagens à esquerda, os 24 espaços no meio
+// (armas, itens e maleta, em octógonos como no HUD) e o editor à direita.
+import { ScrollView } from "std-widgets.slint";
+import { Tema } from "../tema.slint";
+import { Ponte, SlotInfo, ItemOpcao } from "../ponte.slint";
+import { Botao, Campo, Painel, TextoJogo, Titulo } from "../componentes/basicos.slint";
+import { Marcador, Seletor } from "../componentes/controles.slint";
+import { Celula, IconeItem } from "../componentes/icone.slint";
+
+// Um personagem na lista: o busto dele à direita (do retrato do jogo),
+// sumindo para o escuro onde ficam o nome e a vida.
+component CartaoPersonagem inherits Rectangle {
+    in property <int> indice;
+    in property <string> nome;
+    in property <string> detalhe;
+    in property <bool> escolhido;
+    callback clicado();
+
+    height: 62px;
+    background: root.escolhido ? #0b2f7a90 : (toque.has-hover ? #ffffff10 : #00000070);
+    border-width: 1px;
+    border-color: root.escolhido ? Tema.azul-claro : (toque.has-hover ? #ffffff50 : Tema.linha);
+    clip: true;
+    animate background { duration: 150ms; }
+    Image {
+        x: parent.width - self.width;
+        width: parent.height * 288 / 128;
+        height: parent.height;
+        source: @image-url("../imagens/bustos.png");
+        source-clip-x: 0;
+        source-clip-y: root.indice * 128;
+        source-clip-width: 288;
+        source-clip-height: 128;
+        image-fit: fill;
+        opacity: root.escolhido || toque.has-hover ? 1 : 0.7;
+        animate opacity { duration: 150ms; }
+    }
+    Rectangle {
+        background: @linear-gradient(90deg, #02040cf0 0%, #02040cc0 38%, #02040c00 70%);
+    }
+    if root.escolhido: Rectangle {
+        x: 0;
+        width: 4px;
+        background: Tema.azul;
+    }
+    VerticalLayout {
+        x: 14px;
+        width: parent.width - 20px;
+        alignment: center;
+        spacing: 0px;
+        TextoJogo { texto: root.nome; tamanho: 21px; espaco: 1px; brilho: root.escolhido; }
+        Text { text: root.detalhe; font-size: 12px; color: root.escolhido ? #ffffffd8 : Tema.texto-2; }
+    }
+    toque := TouchArea { mouse-cursor: pointer; clicked => { root.clicado(); } }
+}
+
+// Um espaço do inventário: octógono com o ícone e a quantidade no canto.
+component Espaco inherits Rectangle {
+    in property <SlotInfo> info;
+    in property <int> indice;
+    width: 70px;
+    height: 108px;
+    celula := Celula {
+        x: 2px;
+        y: 0;
+        width: 66px;
+        height: 66px;
+        indice: root.info.icone;
+        escolhido: Ponte.slot == root.indice;
+        destaque: toque.has-hover;
+        apagado: root.info.nao-obtida;
+        fechado: root.info.fechado;
+        if root.info.qtd != "": TextoJogo {
+            width: self.preferred-width;
+            height: self.preferred-height;
+            x: parent.width - self.preferred-width - 7px;
+            y: parent.height - self.preferred-height - 3px;
+            texto: root.info.qtd;
+            tamanho: 19px;
+            brilho: false;
+        }
+        if root.info.alterado: Rectangle {
+            x: parent.width - 12px;
+            y: 4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            background: Tema.laranja;
+        }
+    }
+    Text {
+        y: 68px;
+        width: parent.width;
+        height: 36px;
+        text: root.info.nome;
+        font-size: 11px;
+        color: Ponte.slot == root.indice ? #ffffff : (root.info.vazio || root.info.fechado ? Tema.desativado : Tema.texto-2);
+        horizontal-alignment: center;
+        wrap: word-wrap;
+        overflow: elide;
+    }
+    toque := TouchArea {
+        enabled: !root.info.fechado;
+        mouse-cursor: root.info.fechado ? default : pointer;
+        clicked => { Ponte.escolher-slot(root.indice); }
+    }
+}
+
+// Uma faixa de espaços (de `inicio` a `fim`, sem incluir).
+component Faixa inherits VerticalLayout {
+    in property <string> titulo;
+    in property <int> inicio;
+    in property <int> fim;
+    spacing: 6px;
+    Titulo { texto: root.titulo; }
+    HorizontalLayout {
+        spacing: 2px;
+        alignment: start;
+        for n in (root.fim - root.inicio): Espaco {
+            info: Ponte.slots[root.inicio + n];
+            indice: root.inicio + n;
+        }
+    }
+}
+
+// Uma opção da lista de itens do editor.
+component LinhaItem inherits Rectangle {
+    in property <ItemOpcao> item;
+    in property <bool> escolhido;
+    callback clicado();
+    height: 46px;
+    background: root.escolhido ? Tema.azul : (toque.has-hover ? Tema.selecao : transparent);
+    IconeItem { x: 6px; y: 3px; width: 40px; height: 40px; indice: root.item.icone; }
+    Text {
+        x: 54px;
+        width: parent.width - 60px;
+        height: parent.height;
+        text: root.item.nome;
+        color: root.escolhido ? #ffffff : Tema.texto;
+        font-size: 15px;
+        vertical-alignment: center;
+        overflow: elide;
+    }
+    toque := TouchArea { mouse-cursor: pointer; clicked => { root.clicado(); } }
+}
+
+export component TelaInventario inherits Rectangle {
+    HorizontalLayout {
+        spacing: 16px;
+        padding-top: 10px;
+
+        // Personagens
+        VerticalLayout {
+            width: 226px;
+            spacing: 6px;
+            alignment: start;
+            for p[i] in Ponte.personagens: CartaoPersonagem {
+                indice: i;
+                nome: p.nome;
+                detalhe: "VIDA " + p.vida + "/" + p.vida-max + "   ·   " + p.armas + " ARMAS";
+                escolhido: Ponte.personagem == i;
+                clicado => { Ponte.escolher-personagem(i); }
+            }
+        }
+
+        // Espaços, com o retrato do personagem ao fundo
+        Painel {
+            horizontal-stretch: 1;
+            clip: true;
+            if Ponte.personagem >= 0 && Ponte.personagem < Ponte.personagens.length: Image {
+                x: parent.width - self.width + 40px;
+                y: 0;
+                height: parent.height;
+                width: self.height;
+                source: Ponte.retratos[Ponte.personagem];
+                image-fit: contain;
+                opacity: 0.3;
+            }
+            rolagem := ScrollView {
+                width: parent.width;
+                height: parent.height;
+                // só rola na vertical
+                content-width: self.visible-width;
+                VerticalLayout {
+                    width: rolagem.visible-width;
+                    padding: 14px;
+                    spacing: 14px;
+                    alignment: start;
+                    HorizontalLayout {
+                        spacing: 14px;
+                        alignment: start;
+                        TextoJogo {
+                            texto: Ponte.personagem >= 0 && Ponte.personagem < Ponte.personagens.length ? Ponte.personagens[Ponte.personagem].nome : "";
+                            tamanho: 36px;
+                            espaco: 2px;
+                        }
+                        Campo {
+                            width: 150px;
+                            rotulo: "Vida (máx. " + (Ponte.personagem >= 0 && Ponte.personagem < Ponte.personagens.length ? Ponte.personagens[Ponte.personagem].vida-max : 0) + ")";
+                            texto <=> Ponte.vida;
+                            invalido: Ponte.vida-invalida;
+                            editado(t) => { Ponte.vida-editada(t); }
+                        }
+                    }
+                    Faixa { titulo: "ARMAS"; inicio: 0; fim: 6; }
+                    Faixa { titulo: "ITENS"; inicio: 6; fim: 15; }
+                    Faixa { titulo: "MALETA"; inicio: 15; fim: 24; }
+                }
+            }
+        }
+
+        // Editor do espaço escolhido
+        Painel {
+            width: 300px;
+            if Ponte.slot < 0: Text {
+                width: parent.width - 40px;
+                text: "Clique num espaço para editar.";
+                color: Tema.texto-2;
+                wrap: word-wrap;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+            if Ponte.slot >= 0: VerticalLayout {
+                padding: 18px;
+                spacing: 10px;
+                Titulo { texto: Ponte.editor-titulo; }
+                Text { text: Ponte.editor-dica; font-size: 12px; color: Tema.texto-2; wrap: word-wrap; }
+                if Ponte.editor-arma: Marcador {
+                    height: 30px;
+                    text: "Arma obtida";
+                    checked: Ponte.editor-obtida;
+                    toggled => { Ponte.marcar-obtida(self.checked); }
+                }
+                if Ponte.editor-item-livre: Seletor {
+                    model: Ponte.classes;
+                    current-index: Ponte.editor-classe;
+                    selected(i) => { Ponte.trocar-classe(i); }
+                }
+                if Ponte.editor-item-livre: Rectangle {
+                    vertical-stretch: 1;
+                    min-height: 160px;
+                    background: #00000050;
+                    border-width: 1px;
+                    border-color: Tema.linha;
+                    ScrollView {
+                        width: parent.width;
+                        height: parent.height;
+                        VerticalLayout {
+                            padding: 4px;
+                            for op[i] in Ponte.opcoes: LinhaItem {
+                                item: op;
+                                escolhido: Ponte.editor-item == i;
+                                clicado => { Ponte.trocar-item(i); }
+                            }
+                        }
+                    }
+                }
+                if !Ponte.editor-item-livre: Rectangle {
+                    height: 150px;
+                    IconeItem {
+                        x: (parent.width - self.width) / 2;
+                        width: 150px;
+                        height: 150px;
+                        indice: Ponte.slot >= 0 && Ponte.slot < Ponte.slots.length ? Ponte.slots[Ponte.slot].icone : -1;
+                        apagado: !Ponte.editor-obtida && Ponte.editor-arma;
+                    }
+                }
+                if !Ponte.editor-item-livre: Text {
+                    text: Ponte.slot >= 0 && Ponte.slot < Ponte.slots.length ? Ponte.slots[Ponte.slot].nome : "";
+                    font-size: 21px;
+                    color: #ffffff;
+                    horizontal-alignment: center;
+                    wrap: word-wrap;
+                }
+                if Ponte.editor-tem-qtd: Campo {
+                    rotulo: Ponte.editor-arma ? "Balas no pente" : "Quantidade";
+                    texto <=> Ponte.editor-qtd;
+                    invalido: Ponte.editor-qtd-invalida;
+                    ajuda: Ponte.editor-qtd-aviso;
+                    ajuda-aviso: !Ponte.editor-qtd-invalida;
+                    editado(t) => { Ponte.qtd-editada(t); }
+                }
+                if !Ponte.editor-item-livre: Rectangle { vertical-stretch: 1; }
+                if Ponte.editor-item-livre: HorizontalLayout {
+                    alignment: end;
+                    Botao { texto: "ESVAZIAR"; pequeno: true; clicado => { Ponte.esvaziar(); } }
+                }
+            }
+        }
+    }
+}

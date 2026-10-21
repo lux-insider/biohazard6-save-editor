@@ -1,0 +1,178 @@
+// Aba Save: o elenco do jogo ao fundo, o save no alto e, embaixo, os pontos
+// de habilidade, a identificação do pacote e as conferências.
+import { Tema } from "../tema.slint";
+import { Ponte } from "../ponte.slint";
+import { Botao, Campo, Selo, TextoJogo, Titulo } from "../componentes/basicos.slint";
+
+// Painel mais transparente que o do inventário, para o elenco aparecer.
+component Vidro inherits Rectangle {
+    background: #070c18b8;
+    border-width: 1px;
+    border-color: Tema.linha;
+    @children
+}
+
+component Conferencia inherits HorizontalLayout {
+    in property <string> texto;
+    in property <bool> ok;
+    in property <string> erro;
+    spacing: 10px;
+    Text { text: root.texto; color: Tema.texto; vertical-alignment: center; horizontal-stretch: 1; }
+    Selo { texto: root.ok ? "OK" : root.erro; bom: root.ok; }
+}
+
+export component TelaSave inherits Rectangle {
+    clip: true;
+
+    // Os oito personagens, translúcidos, apoiados na base da aba.
+    Image {
+        width: parent.width;
+        height: min(parent.height * 0.9, parent.width * 560 / 1995);
+        y: parent.height - self.height;
+        source: @image-url("../imagens/elenco.png");
+        image-fit: cover;
+        opacity: 0.55;
+    }
+    Rectangle {
+        background: @linear-gradient(180deg, #03050aff 0%, #03050a80 45%, #03050a00 100%);
+    }
+
+    VerticalLayout {
+        padding-top: 10px;
+        spacing: 16px;
+        alignment: start;
+
+        // O save
+        Vidro {
+            HorizontalLayout {
+                padding: 18px;
+                spacing: 20px;
+                if Ponte.tem-miniatura: Image {
+                    width: 84px;
+                    height: 84px;
+                    source: Ponte.miniatura;
+                    image-fit: contain;
+                }
+                VerticalLayout {
+                    alignment: center;
+                    spacing: 4px;
+                    horizontal-stretch: 0;
+                    min-width: 300px;
+                    TextoJogo { texto: Ponte.nome-save; tamanho: 26px; }
+                    Text { text: Ponte.jogo; color: Tema.texto-2; }
+                    Text { text: "Gravado pelo jogo em " + Ponte.data; color: Tema.texto; }
+                }
+                VerticalLayout {
+                    alignment: center;
+                    horizontal-stretch: 1;
+                    Campo { rotulo: "Arquivo"; texto: Ponte.caminho; leitura: true; }
+                }
+            }
+        }
+
+        HorizontalLayout {
+            spacing: 16px;
+
+            // Pontos de habilidade
+            Vidro {
+                horizontal-stretch: 1;
+                min-width: 280px;
+                preferred-width: 380px;
+                VerticalLayout {
+                    padding: 18px;
+                    spacing: 12px;
+                    alignment: start;
+                    Titulo { texto: "PONTOS DE HABILIDADE"; }
+                    Rectangle {
+                        height: 78px;
+                        background: @linear-gradient(90deg, #1f6bff58 0%, #1f6bff10 100%);
+                        border-width: 1px;
+                        border-color: #5fa0ff70;
+                        TextoJogo {
+                            width: self.preferred-width;
+                            height: self.preferred-height;
+                            x: 18px;
+                            y: (parent.height - self.height) / 2;
+                            texto: Ponte.pontos-invalido ? "—" : Ponte.pontos-exibido;
+                            tamanho: 44px;
+                            espaco: 2px;
+                        }
+                        TextoJogo {
+                            width: self.preferred-width;
+                            height: self.preferred-height;
+                            x: parent.width - self.width - 14px;
+                            y: parent.height - self.height - 8px;
+                            texto: "PONTOS";
+                            tamanho: 14px;
+                            espaco: 3px;
+                            brilho: false;
+                            cor: #c9d6f0;
+                        }
+                    }
+                    HorizontalLayout {
+                        spacing: 12px;
+                        Campo {
+                            horizontal-stretch: 1;
+                            rotulo: "Novo valor (0 a 9.999.999)";
+                            texto <=> Ponte.pontos;
+                            invalido: Ponte.pontos-invalido;
+                            editado(t) => { Ponte.pontos-editados(t); }
+                        }
+                        VerticalLayout {
+                            alignment: end;
+                            Botao {
+                                texto: "MÁXIMO";
+                                clicado => { Ponte.pontos = "9999999"; Ponte.pontos-editados("9999999"); }
+                            }
+                        }
+                    }
+                    Text {
+                        text: "Os pontos que o menu de habilidades do jogo mostra. Para ter as habilidades sem gastar pontos, use a aba Habilidades.";
+                        wrap: word-wrap;
+                        font-size: Tema.fonte-pequena;
+                        color: Tema.texto-2;
+                    }
+                }
+            }
+
+            // Identificação do pacote (só no Xbox)
+            if !Ponte.pc: Vidro {
+                horizontal-stretch: 1;
+                min-width: 300px;
+                preferred-width: 440px;
+                VerticalLayout {
+                    padding: 18px;
+                    spacing: 10px;
+                    alignment: start;
+                    Titulo { texto: "IDENTIFICAÇÃO"; }
+                    Campo { rotulo: "Profile ID (perfil dono do save)"; texto: Ponte.profile-id; leitura: true; }
+                    Campo { rotulo: "Console ID"; texto: Ponte.console-id; leitura: true; }
+                    Campo { rotulo: "Device ID (dispositivo de armazenamento)"; texto: Ponte.device-id; leitura: true; }
+                }
+            }
+
+            // Conferências
+            Vidro {
+                width: 300px;
+                VerticalLayout {
+                    padding: 18px;
+                    spacing: 12px;
+                    alignment: start;
+                    Titulo { texto: "CONFERÊNCIAS"; }
+                    Conferencia { texto: "Verificação do savedata.bin"; ok: Ponte.verificacao-ok; erro: "ERRADA"; }
+                    if !Ponte.pc: Conferencia { texto: "Hashes do pacote"; ok: Ponte.hashes-ok; erro: "ERRADOS"; }
+                    if !Ponte.pc: Conferencia { texto: "Assinatura"; ok: Ponte.assinatura-ok; erro: "INVÁLIDA"; }
+                    Rectangle { height: 1px; background: Tema.linha; }
+                    Text {
+                        text: Ponte.pc
+                            ? "Save de PC: não há pacote nem assinatura. Ao salvar, o editor refaz a verificação e guarda um backup do arquivo antes de gravar por cima."
+                            : "Ao salvar, o editor refaz a verificação e os hashes e assina o pacote com " + Ponte.chave + ". Antes de gravar por cima, guarda um backup do arquivo.";
+                        wrap: word-wrap;
+                        font-size: Tema.fonte-pequena;
+                        color: Tema.texto-2;
+                    }
+                }
+            }
+        }
+    }
+}

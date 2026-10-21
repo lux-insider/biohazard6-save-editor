@@ -1,0 +1,40 @@
+[package]
+name = "biohazard6-save-editor"
+version = "1.0.0"
+edition = "2021"
+description = "BIOHAZARD 6 SAVE EDITOR: editor de save do Resident Evil 6 para Xbox 360"
+license = "MIT"
+authors = ["lux-insider"]
+
+[dependencies]
+slint = { version = "1.18", default-features = false, features = [
+    "std",
+    "compat-1-2",
+    "backend-winit",
+    "renderer-winit-software",
+    "software-renderer-systemfonts",
+    "unstable-winit-030",
+    "raw-window-handle-06",
+] }
+rfd = { version = "0.17", default-features = false, features = ["gtk3"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha1 = "0.10"
+png = "0.18"
+num-bigint = "0.4"
+
+[build-dependencies]
+slint-build = "1.18"
+winresource = "0.1"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = "symbols"
+
+# Conta que estoura fecha o programa em vez de gravar valor errado no save.
+[profile.release.package.biohazard6-save-editor]
+overflow-checks = true
+strip = "symbols"
