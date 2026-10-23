@@ -1,8 +1,10 @@
 # BIOHAZARD 6 SAVE EDITOR
 
 [![Versão](https://img.shields.io/github/v/release/lux-insider/biohazard6-save-editor?label=vers%C3%A3o)](https://github.com/lux-insider/biohazard6-save-editor/releases/latest)
+[![Testes](https://github.com/lux-insider/biohazard6-save-editor/actions/workflows/testes.yml/badge.svg)](https://github.com/lux-insider/biohazard6-save-editor/actions/workflows/testes.yml)
 [![Licença: MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-blue)](LICENSE)
-![Plataformas](https://img.shields.io/badge/plataformas-Windows%20%7C%20Linux-informational)
+![Windows](https://img.shields.io/badge/Windows-0078D6?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgxMS4zdjExLjNIMHpNMTIuNyAwSDI0djExLjNIMTIuN3pNMCAxMi43aDExLjNWMjRIMHpNMTIuNyAxMi43SDI0VjI0SDEyLjd6Ii8%2BPC9zdmc%2B)
+![Linux](https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black)
 ![Rust](https://img.shields.io/badge/feito%20em-Rust-orange)
 
 ![Tela inicial](docs/prints/inicio.jpg)
@@ -27,6 +29,7 @@ nativo para Windows e Linux, escrito em Rust com interface em Slint.
 - [Compilação](#compilação)
 - [Estrutura do projeto](#estrutura-do-projeto)
 - [Documentação](#documentação)
+- [Contribuir](#contribuir)
 - [Licença](#licença)
 
 ---
@@ -226,6 +229,15 @@ gerados por `ferramentas/artes.py`.
 |---|---|
 | [CHANGELOG.md](CHANGELOG.md) | histórico de versões |
 | [docs/FORMATO-DO-SAVE.md](docs/FORMATO-DO-SAVE.md) | formato do save do Xbox 360 e do PC: endereços, inventário, habilidades e pacote CON |
+
+---
+
+## Contribuir
+
+Erros e ideias são bem-vindos nas [issues](https://github.com/lux-insider/biohazard6-save-editor/issues/new/choose),
+com um modelo para cada caso. Para enviar código, veja o
+[CONTRIBUTING.md](CONTRIBUTING.md); para falhas de segurança, o
+[SECURITY.md](SECURITY.md).
 
 ---
 
